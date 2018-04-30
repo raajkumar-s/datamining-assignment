@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
-loaded_data = pd.read_csv('data/arc.csv', sep= ',', header=0)
+loaded_data = pd.read_csv('../data/arc.csv', sep= ',', header=0)
 
 # print('Dataset Lenght:: ', len(loaded_data))
 # print('Dataset Shape:: ', loaded_data.shape)
@@ -50,13 +50,15 @@ Y_pred = clf.predict(X)
 
 print('Actual bug class values:')
 for value in Y:
-  print(value)
+  print(value, end=" ")
 
-print('Predicted bug class values:\n', Y_pred)
+print('\nPredicted bug class values:')
+for value in Y_pred:
+  print(value, end=" ")
 
-print('Accuracy: ', accuracy_score(Y, Y_pred) * 100)
+print('\nAccuracy: ', accuracy_score(Y, Y_pred) * 100)
 
 # Plot graph
-dot_data = tree.export_graphviz(clf, out_file=None) 
+dot_data = tree.export_graphviz(clf, out_file=None)
 graph = graphviz.Source(dot_data) 
 graph.render("Output")
