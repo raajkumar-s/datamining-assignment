@@ -8,6 +8,7 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 # from sklearn.datasets import load_digits
 from sklearn.preprocessing import scale
+from matplotlib.pyplot import cm
 
 np.random.seed(42)
 DATASET_PATH='../data/'
@@ -101,7 +102,7 @@ plt.figure(1)
 plt.clf()
 plt.imshow(Z, interpolation='nearest',
            extent=(xx.min(), xx.max(), yy.min(), yy.max()),
-           cmap=plt.cm.Paired,
+           cmap=cm.Paired,
            aspect='auto', origin='lower')
 
 plt.plot(reduced_data[:, 0], reduced_data[:, 1], 'k.', markersize=2)
