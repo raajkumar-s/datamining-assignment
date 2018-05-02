@@ -1,8 +1,10 @@
+import sys
 import numpy as np
 import pandas as pd
 # import matplotlib.pyplot as plt
-import skfuzzy as fuzz
-# from sklearn.model_selection import train_test_split
+from skfuzzy.cluster import cmeans,cmeans_predict
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score,precision_score,recall_score,f1_score
 
 colors = ['b', 'orange', 'g', 'r', 'c', 'm', 'y', 'k', 'Brown', 'ForestGreen']
 
@@ -24,22 +26,33 @@ for index, item in enumerate(labels):
 # End of for
 labels = np.asarray(labels) # Convert back to numpy array
 
-# X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.4, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.4, random_state=0)
+
+print(X_train.shape)
+print(X_test.shape)
+print(y_train)
+print(y_test)
 
 n_samples, n_features = data.shape
 n_digits = len(np.unique(labels))
 print("n_digits: %d, \t n_samples %d, \t n_features %d"
       % (n_digits, n_samples, n_features))
 
+cntr, u, u0, d, jm, p, fpc = cmeans(data, 2, 2, error=0.005, maxiter=1000, init=None, seed=None)
 
-# Set up the loop
-ncenters = 2
-cntr, u, u0, d, jm, p, fpc = fuzz.cluster.cmeans(
-    data, ncenters, 2, error=0.005, maxiter=1000, init=None)
-
-
+print(cntr.shape)
 # Predict
-# cntr, u_orig, _, _, _, _, _ = fuzz.cluster.cmeans_predict(
-#     data, 3, 2, error=0.005, maxiter=1000)
+u,u0,d,jm,p,fpc = cmeans_predict(data, cntr, 2, error=0.005, maxiter=1000, init=None, seed=None)
 
-print(fuzz.cluster.cmeans_predict(data, 3, 2, error=0.005, maxiter=1000))
+# print('------ actual ----------')
+# print(y_train.shape)
+# print('------ predict ----------')
+# print(u.shape)
+
+# outputline = ','+ str(accuracy_score(y_train,u))+','+str(precision_score(y_train,u))+','+str(recall_score(y_train,u))+','+str(f1_score(y_train,u))
+
+# f=open("out.csv", "a+")
+# f.write(outputline)
+# f.close()
+
+

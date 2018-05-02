@@ -7,7 +7,7 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support as s
 loaded_data = pd.read_csv('../data/arc.csv', sep= ',', header=0)
 
 X = loaded_data.values[:, 3:-1].tolist() # Select from column 4 till last but 1
-Y = loaded_data.values[:,-1].tolist() # Selecr last column
+Y = loaded_data.values[:,-1].tolist() # Select last column
 
 # Update Y to contain either 1s or 0s
 for index, item in enumerate(Y):
